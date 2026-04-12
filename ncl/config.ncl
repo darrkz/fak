@@ -41,4 +41,19 @@ let fak = import "../lib/fak.ncl" in
       counter_clockwise = fak.Key.AudioVolDown,
     }
   ],
+
+  # "Solid"：固定单色。
+  # "Breath"：呼吸灯。
+  # "Rainbow"：彩虹流光。
+
+  light = {
+    # 数据输出引脚，建议用 P3.4
+    pin = fak.Pin.P34,
+    # 灯珠总数
+    num = 6, 
+    # 灯光亮度 (0-255)
+    brightness = 50,
+    # 默认灯光模式，例如：Rainbow（彩虹）
+    default_mode = "Rainbow", 
+  },
 }
