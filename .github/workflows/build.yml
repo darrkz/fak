@@ -3,18 +3,22 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # 消除 Node 20 警告
     steps:
       - uses: actions/checkout@v4
+      
+      # 1. 安装 Nix 环境
       - uses: DeterminateSystems/nix-installer-action@v16
-      - name: Build My Keyboard
-        # 增加 --extra-experimental-features 确保 nix 命令兼容
+      
+      # 2. 调用 FAK 的 python 脚本进行编译
+      # nix develop --command 会进入包含 sdcc/nickel 的环境并运行指令
+      - name: Compile with FAK script
         run: |
-          nix build ".#packages.x86_64-linux.default" --override-input my_keyboard_config "./ncl/keyboards/my_6key_macro.ncl" --extra-experimental-features "nix-command flakes" || \
-          nix build ".#keyboards.x86_64-linux.crkbd" --override-input keyboards/crkbd "./ncl/keyboards/my_6key_macro.ncl" --extra-experimental-features "nix-command flakes"
+          nix develop --command python3 fak.py compile
+          
+      # 3. 上传生成的固件
+      # 根据 FAK 脚本习惯，固件通常生成在 build/ 文件夹下
       - name: Upload Firmware
         uses: actions/upload-artifact@v4
         with:
           name: ch552-firmware
-          path: result/
+          path: build/*.bin 
