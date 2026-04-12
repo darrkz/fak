@@ -47,6 +47,7 @@ let fak = import "../lib/fak.ncl" in
   # "Rainbow"：彩虹流光。
 
   light = {
+    enable = true,
     # 数据输出引脚，建议用 P3.4
     pin = fak.Pin.P34,
     # 灯珠总数
@@ -54,6 +55,7 @@ let fak = import "../lib/fak.ncl" in
     # 灯光亮度 (0-255)
     brightness = 100,
     # 默认灯光模式，例如：Rainbow（彩虹）
-    default_mode = "Breath", 
+
+    default_mode = "Rainbow", 
   },
 }
