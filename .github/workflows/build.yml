@@ -9,7 +9,7 @@ jobs:
       - name: Build My Keyboard
         run: nix build .#keyboards.my_6key_macro
       - name: Upload Firmware
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ch552-firmware
           path: result/
