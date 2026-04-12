@@ -1,23 +1,17 @@
-name: Build Firmware
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - uses: DeterminateSystems/nix-installer-action@v16
-      
       - name: Compile Keyboard
-        # 使用 nix develop 环境运行 python 编译脚本
         run: |
+          # 确保目录存在（预防万一）
+          mkdir -p ncl
+          # 运行编译
           nix develop --command python3 fak.py compile
           
+      - name: Check Output
+        # 在日志里确认文件是否存在，方便调试
+        run: ls -R build/
+
       - name: Upload Firmware
         uses: actions/upload-artifact@v4
         with:
           name: ch552-firmware
-          # 编译产物通常在 build 文件夹
-          path: |
-            build/*.bin
-            build/*.hex
+          # 根据源码，直接锁定这个路径
+          path: build/out.bin
