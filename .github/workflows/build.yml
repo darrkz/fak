@@ -1,3 +1,13 @@
+name: Build Firmware
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: DeterminateSystems/nix-installer-action@v16
+      
       - name: Compile Keyboard
         run: |
           # 确保目录存在（预防万一）
