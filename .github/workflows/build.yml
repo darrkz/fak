@@ -10,7 +10,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
       - name: Build My Keyboard
         # 增加 --extra-experimental-features 确保 nix 命令兼容
-        run: nix build .#keyboards.my6key --extra-experimental-features "nix-command flakes"
+        run: nix build .#keyboards.my_6key_macro --extra-experimental-features "nix-command flakes"
       - name: Upload Firmware
         uses: actions/upload-artifact@v4
         with:
