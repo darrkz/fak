@@ -1,0 +1,15 @@
+name: Build Firmware
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: DeterminateSystems/nix-installer-action@v4
+      - name: Build My Keyboard
+        run: nix build .#keyboards.my_6key_macro
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: ch552-firmware
+          path: result/
