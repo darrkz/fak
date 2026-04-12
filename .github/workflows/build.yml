@@ -6,19 +6,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # 1. 安装 Nix 环境
       - uses: DeterminateSystems/nix-installer-action@v16
       
-      # 2. 调用 FAK 的 python 脚本进行编译
-      # nix develop --command 会进入包含 sdcc/nickel 的环境并运行指令
-      - name: Compile with FAK script
+      - name: Compile Keyboard
+        # 使用 nix develop 环境运行 python 编译脚本
         run: |
           nix develop --command python3 fak.py compile
           
-      # 3. 上传生成的固件
-      # 根据 FAK 脚本习惯，固件通常生成在 build/ 文件夹下
       - name: Upload Firmware
         uses: actions/upload-artifact@v4
         with:
           name: ch552-firmware
-          path: build/*.bin 
+          # 编译产物通常在 build 文件夹
+          path: |
+            build/*.bin
+            build/*.hex
