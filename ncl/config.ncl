@@ -53,7 +53,7 @@ let fak = import "../lib/fak.ncl" in
     # 灯珠总数
     num = 6, 
     # 灯光亮度 (0-255)
-    brightness = 100,
+    brightness = 255,
     # 默认灯光模式，例如：Rainbow（彩虹）
 
     default_mode = "Rainbow", 
